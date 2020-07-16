@@ -50,17 +50,7 @@ traumatologia.sort(function (a, b) {
 //2.  Eliminar el primer y último elemento del arreglo de Radiología
 radiologia.shift(); /* quitar la primera consulta*/
 radiologia.pop(); /* quitar la última consulta*/
-
-//3
-console.log(dental.join(" - "));
-
-let consultasDentales = dental.reduce(function(acumulador, consultaDental){
-    return acumulador + " - " + consultaDental.hora;
-});
-
-console.log(consultasDentales)
-
-
+//Continua abajo ****
 
 
 //Agregar código para el desafio 2 aquí
@@ -70,6 +60,51 @@ document.write(`<p>Cantidad de atenciones para Traumatología: ${traumatologia.l
 document.write(`<p>Cantidad de atenciones para Dental: ${dental.length}</p>`);
 
 
-document.write(`<p>Primera atencion: ${radiologia[0].paciente} - ${radiologia[0].prevision} | Última atención: ${radiologia[radiologia.length - 1].paciente} - ${radiologia[radiologia.length - 1].prevision}.</p>`);
+document.write(`<hr /><p>Primera atencion: ${radiologia[0].paciente} - ${radiologia[0].prevision} | Última atención: ${radiologia[radiologia.length - 1].paciente} - ${radiologia[radiologia.length - 1].prevision}.</p>`);
 document.write(`<p>Primera atencion: ${traumatologia[0].paciente} - ${traumatologia[0].prevision} | Última atención: ${traumatologia[traumatologia.length - 1].paciente} - ${traumatologia[traumatologia.length - 1].prevision}.</p>`);
 document.write(`<p>Primera atencion: ${dental[0].paciente} - ${dental[0].prevision} | Última atención: ${dental[dental.length - 1].paciente} - ${dental[dental.length - 1].prevision}.</p>`);
+
+//3 Continúa Aquí ****
+//Imprimir consultas médicas dentales
+document.write(`<hr />Atenciones dentales:`) //Titulo, para hacerlo visualmente más cómodo
+dental.forEach(function (consulta) {
+    let arrayConsulta = Object.values(consulta); /* accediendo a los valores del objeto */
+    document.write(`<p> ${arrayConsulta.join(' - ')} </p> `) /*Imprimiendo las consultas + separar valores con " - " */
+});
+
+//4
+let pacientes = []; /*Array vacío para juntar todos los pacientes de todas las especialidades en un mismo array */
+radiologia.forEach(consulta => { 
+    pacientes.push(consulta.paciente); /*Accediendo a los pacientes de radiología y agreándolos al array creado anteriormente */
+});
+traumatologia.forEach(consulta => {
+    pacientes.push(consulta.paciente); /*Accediendo a los pacientes de traumatología y agreándolos al array creado anteriormente */
+});
+dental.forEach(consulta => {
+    pacientes.push(consulta.paciente); /*Accediendo a los pacientes del área dental y agreándolos al array creado anteriormente */
+});
+
+document.write(`<hr />Listado de pacientes:`) //Titulo, para hacerlo visualmente más cómodo
+pacientes.forEach(paciente => {
+    document.write(`<p> ${paciente} </p>`);  /*Una vez que tenemos la lista completa de pacientes en nuestra variable pacientes, imprimimos cada una de ellas en un nuevo párrafo */
+});
+
+
+//5
+document.write(`<hr />Previsión cambiada de pacientes en área dental:`) //Titulo, para hacerlo visualmente más cómodo
+let dentalNew = [];
+dental.forEach((consulta, i) => {
+    if (consulta.prevision === "FONASA") {
+        consulta.prevision = "ISAPRE";
+        dentalNew.push(consulta);
+        return false;
+    }
+    if (consulta.prevision === "ISAPRE") {
+        consulta.prevision = "FONASA";
+        dentalNew.push(consulta);
+    }
+});
+
+dentalNew.forEach(consulta => {
+    document.write(`<p> ${consulta.paciente} - ${consulta.prevision}</p>`)
+});
