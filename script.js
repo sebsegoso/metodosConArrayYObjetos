@@ -92,19 +92,22 @@ pacientes.forEach(paciente => {
 
 //5
 document.write(`<hr />Previsión cambiada de pacientes en área dental:`) //Titulo, para hacerlo visualmente más cómodo
-let dentalNew = [];
-dental.forEach((consulta, i) => {
-    if (consulta.prevision === "FONASA") {
-        consulta.prevision = "ISAPRE";
-        dentalNew.push(consulta);
-        return false;
+let dentalNew = []; /*Array vacío donde se reunirán los datos correspondientes a los pacientes  */
+dental.forEach((consulta, i) => {  /* Funcion a ejecutar en CADA elemento del array "dental" */
+    if (consulta.prevision === "FONASA") { /* Si la previsión es igual a "FONASA"*/
+        consulta.prevision = "ISAPRE"; /* Entonces se le asigna el valor ISAPRE */
+        dentalNew.push(consulta); /*Se agrega al array vacío que agregamos previamente */
+        return false; /*Para evitar que la previsión cambiada entre nuevamente al siguiente if */
     }
-    if (consulta.prevision === "ISAPRE") {
+    if (consulta.prevision === "ISAPRE") { 
         consulta.prevision = "FONASA";
         dentalNew.push(consulta);
     }
 });
 
-dentalNew.forEach(consulta => {
+dentalNew.forEach(consulta => { /*Una vez recolectados los datos, imprimir */
     document.write(`<p> ${consulta.paciente} - ${consulta.prevision}</p>`)
 });
+
+
+//Sebastián Segura Osorio 2020
